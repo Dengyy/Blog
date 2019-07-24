@@ -19,7 +19,7 @@ rawData.forEach(obj => {
         const projectName = projectNames[obj['project_id']]
         dataObj[projectName] = dataObj[projectName] || {}
 
-        const date = obj['created_at'].slice(0, 10)
+        const date = obj['created_at'].slice(0, 7)
         dataObj[projectName][date] = dataObj[projectName][date] || {}
 
         dataObj[projectName][date][commit_title] = true
@@ -29,7 +29,7 @@ rawData.forEach(obj => {
 
 
 const getHslColor = (i, j = 0, k = 0) => {
-    return `hsl(${i * 360}, ${j ? j * 100 : 75}%, ${k ? k * 100 : 49}%, 1)`
+    return `hsl(${i * 360}, ${j ? j * 70 : 75}%, ${k ? k * 70 : 49}%, 1)`
 }
 
 const dataKeys = Object.keys(dataObj)
@@ -63,7 +63,7 @@ const data = dataKeys.map((projectKey, i) => {
     })
 
     return Object.assign({
-        name: `${projectKey}: ${jL}`,
+        name: `${projectKey}`,
         itemStyle: {
             color: getHslColor((i + 1) / iL)
         }

@@ -15,7 +15,7 @@ projects.forEach(p => {
 })
 
 rawData.forEach(obj => {
-    const x = obj['created_at'].slice(0, 10)
+    const x = obj['created_at'].slice(0, 7)
     let xI = xArr.indexOf(x);
     if (xI < 0) {
         xArr.push(x)
@@ -34,14 +34,17 @@ rawData.forEach(obj => {
         y,
         commit_title: []
     }
-    dataObj[key].commit_title.push(obj['push_data']['commit_title'])
+    const commit_title = obj['push_data']['commit_title']
+    if (commit_title && !commit_title.startsWith('Merge')) {
+        dataObj[key].commit_title.push(commit_title)
+    }
 });
 
 const scatterData = [];
 
 const data = Object.keys(dataObj).map(k => {
     const res = k.split('-').map(s => +s)
-    const commits = dataObj[k].commit_title.filter(msg => !(msg || '').startsWith('Merge'))
+    const commits = dataObj[k].commit_title
     res.push(commits.length)
     scatterData.push([...res, commits.join('<br>')])
     return res
@@ -74,7 +77,7 @@ const option = {
     },
     visualMap: {
         min: 0,
-        max: 10,
+        max: 50,
         calculable: true,
         orient: 'horizontal',
         left: 'center',
