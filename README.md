@@ -1,2 +1,1 @@
-# Blog
-Dengyy‘s blog
+# blog
