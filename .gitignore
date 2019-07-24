@@ -2,3 +2,5 @@
 gitPushHeatMap/tmp/
 
 gitPushHeatMap/node_modules/
+
+*.js
