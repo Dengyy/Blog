@@ -2,5 +2,4 @@
 gitPushHeatMap/tmp/
 
 gitPushHeatMap/node_modules/
-
-*.js
+gitPushHeatMap/dist/bundle.js
