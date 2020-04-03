@@ -1,36 +1,94 @@
-/* 给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function(root, p, q) {
+  if (!root) {
+    return null;
+  }
+  const p1 = getParents(root, p)
+  const q1 = getParents(root, q)
 
-为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。
+  if (!p1 || !q1) {
+    return null;
+  }
+  
+  for (let i = 0, len1 = p1.length; i < len1; i++) {
+    for (let j = 0, len1 = q1.length; j < len1; j++) {
+      if (p1[i] === q1[j]) {
+        return p1[i]
+      }
+    }
+  }
 
-说明：不允许修改给定的链表。
+  return null;
+};
 
- 
+function getParents(root, target) {
+  if (!root) {
+    return null;
+  }
 
-示例 1：
+  if (target === root.val) {
+    return [root.val];
+  }
 
-输入：head = [3,2,0,-4], pos = 1
-输出：tail connects to node index 1
-解释：链表中有一个环，其尾部连接到第二个节点。
+  const p1 = getParents(root.left, target)
+  const p2 = getParents(root.right, target)
+  if (p1) {
+    p1.push(root.val)
+    return p1
+  }
+  if (p2) {
+    p2.push(root.val)
+    return p2
+  }
+}
 
+function tranverseTree(root) {
+  if (!root) {
+    return null;
+  }
+  tranverseTree(root.left)
+  console.log('----val', root.val)
+  tranverseTree(root.right)
+}
 
-示例 2：
+test(3, lowestCommonAncestor(
+  convertTree([3,5,1,6,2,0,8,null,null,7,4]),
+  5, 1
+))
+test(5, lowestCommonAncestor(
+  convertTree([3,5,1,6,2,0,8,null,null,7,4]),
+  5, 4
+))
 
-输入：head = [1,2], pos = 0
-输出：tail connects to node index 0
-解释：链表中有一个环，其尾部连接到第一个节点。
+function TreeNode(val) {
+  this.val = val;
+  this.left = this.right = null;
+}
 
+function convertTree(arr, i = 0) {
+  let root
+  if (i < arr.length && i >= 0 && arr[i]) {
+    root = new TreeNode(arr[i])
+    let leftIndex = 2 * (i + 1) - 1
+    let rightIndex = leftIndex + 1
+    root.left = convertTree(arr, leftIndex)
+    root.right = convertTree(arr, rightIndex)
+  }
+  return root
+}
 
-示例 3：
-
-输入：head = [1], pos = -1
-输出：no cycle
-解释：链表中没有环。
-
-
- 
-
-进阶：
-你是否可以不用额外空间解决此题？ */
 
 /**
  * Definition for singly-linked list.
@@ -49,35 +107,28 @@ var detectCycle = function(head, pos) {
     return null;
   }
   let i = 0
-  let temp = head
-  let index = head
-  let test
+  let list = head
+  const tempMap = []
   
-  while(temp) {
-    const next = temp.next
-    temp = new ListNode(temp.val === true)
-    index = new ListNode(i)
-    test = temp
-    temp.next = next
-    index.next = next
-
-    debugger
-    if (!temp.val) {
-      i++
-      temp.val = true
-    } else {
-      return `tail connects to node index ${index.val}`
+  while(list) {
+    for (let j = 0, len = tempMap.length; j < len; j++) {
+      if (tempMap[j] === list) {
+        return `tail connects to node index ${j}`
+      }
     }
-    temp = temp.next
-    index = index.next
-    test = 
+    tempMap[i] = list
+    i++
+    list = list.next
   }
   
   return 'no cycle'
 };
-test(2, detectCycle(
-  convertList([3,2,0,-4], 2),
-))
+// test(2, detectCycle(
+//   convertList([3,2,0,-4], 2),
+// ))
+// test(0, detectCycle(
+//   convertList([0,-4], 0),
+// ))
 
 
 var sortList = function(head) {
@@ -239,7 +290,7 @@ function convertList (arr, pos) {
   }
 
   let cur = head
-  for (let i = pos, len = arr.length; i > -1 && i < len; i++) {
+  for (let i = 0, len = arr.length; i > -1 && i < len && i < pos; i++) {
     cur = cur.next
   }
 
