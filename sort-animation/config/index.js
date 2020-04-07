@@ -50,7 +50,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/blog/sort-animation/dist',
+    assetsPublicPath: '/Blog/sort-animation/dist',
 
     /**
      * Source Maps

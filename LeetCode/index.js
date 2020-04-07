@@ -63,14 +63,14 @@ function tranverseTree(root) {
   tranverseTree(root.right)
 }
 
-test(3, lowestCommonAncestor(
-  convertTree([3,5,1,6,2,0,8,null,null,7,4]),
-  5, 1
-))
-test(5, lowestCommonAncestor(
-  convertTree([3,5,1,6,2,0,8,null,null,7,4]),
-  5, 4
-))
+// test(3, lowestCommonAncestor(
+//   convertTree([3,5,1,6,2,0,8,null,null,7,4]),
+//   5, 1
+// ))
+// test(5, lowestCommonAncestor(
+//   convertTree([3,5,1,6,2,0,8,null,null,7,4]),
+//   5, 4
+// ))
 
 function TreeNode(val) {
   this.val = val;
