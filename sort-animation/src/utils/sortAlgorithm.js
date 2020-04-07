@@ -167,7 +167,7 @@ export const radixSort = (arr, animationHandler, radix = 10) => {
       }
       const bucketIndex = Math.floor(sortArr[i] / Math.pow(radix, bit)) % Math.pow(radix, bit + 1)
       animationHandler({
-        sortedArr: arr.map((val, idx) => ({
+        sortedArr: sortArr.map((val, idx) => ({
           value: val,
           isBucket: idx === i
         })),
@@ -178,7 +178,7 @@ export const radixSort = (arr, animationHandler, radix = 10) => {
       })
       bucketArr[bucketIndex] = [...bucketArr[bucketIndex], sortArr[i]]
       animationHandler({
-        sortedArr: arr.map((val, idx) => ({
+        sortedArr: sortArr.map((val, idx) => ({
           value: val
         })),
         bucketArr: bucketArr.map((val, idx) => ({
