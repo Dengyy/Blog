@@ -3,3 +3,5 @@ gitPushHeatMap/tmp/
 
 gitPushHeatMap/node_modules/
 gitPushHeatMap/dist/bundle.js
+
+.history/
