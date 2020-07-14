@@ -5,7 +5,7 @@ from os import path
 import projects
 import sys
 
-fromDate = '2019-07-01'
+fromDate = '2020-01-01'
 initEndDate = time.strftime("%Y-%m-%d", time.localtime())
 
 [name, uid, token, gitUrl] = sys.argv
