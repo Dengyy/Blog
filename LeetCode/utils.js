@@ -8,6 +8,16 @@ function test (expect, res) {
   colorLog(`expect: ${expect}, res: ${res}`)
 }
 
+function logList(l) {
+  let h = l;
+  let str = '';
+  while(h) {
+    str += (h.val + (h.next ? '->' : ''));
+    h = h.next;
+  }
+  colorLog(str);
+}
+
 function ListNode(val) {
   this.val = val;
   this.next = null;
