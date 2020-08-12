@@ -1,7 +1,7 @@
-function colorLog (value, stringify = false) {
+function colorLog (value, ...args) {
   /* elsint-disable */
   // @ts-ignore
-  console.log(`%c${stringify ? JSON.stringify(value, 2) : value}`, 'color: yellow')
+  console.log(`%c${value}`, 'color: yellow', ...args)
 }
 
 function test (expect, res) {
@@ -142,3 +142,9 @@ function walkTree(tree, cb, type) {
 
   }
 }
+
+// Definition for a Node.
+function Node(val, neighbors) {
+   this.val = val === undefined ? 0 : val;
+   this.neighbors = neighbors === undefined ? [] : neighbors;
+};
