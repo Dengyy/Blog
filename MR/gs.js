@@ -13,6 +13,13 @@ const getMergeBySelf = (data) => {
   });
 }
 
+const getReleasePush = (data) => {
+    return data.filter(item => {
+      return item.target_branch !== 'master'
+        && item.author.name === item.merged_by.name;
+    });
+  }
+
 const getHtmlList = (data) => {
   return `${data.length}: </h3>
     <div>` + data.map(item => {
@@ -27,9 +34,11 @@ const msg = `
   ${getHtmlList(getMaster(mrs))}
   <h3>自己合并
   ${getHtmlList(getMergeBySelf(mrs))}
+  <h3>release push
+  ${getHtmlList(getMergeBySelf(mrs))}
 `
 $('#brief').html(`
   <p>截止${new Date().toLocaleString()}</p>
-  <p>gs9 MR 总量: ${mrs.length}</p>
+  <p>gs10 MR 总量: ${mrs.length}</p>
 `);
 $('#container').html(msg).accordion();

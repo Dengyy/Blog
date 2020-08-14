@@ -148,3 +148,52 @@ function Node(val, neighbors) {
    this.val = val === undefined ? 0 : val;
    this.neighbors = neighbors === undefined ? [] : neighbors;
 };
+
+function convertGraph(arr, visited) {
+  visited = visited || [];
+  let res
+  for (let i = 0; i < arr.length; i++) {
+    let node
+    const hasVisit = visited.filter(item => item.val === i + 1);
+    if (hasVisit.length > 0) {
+      node = hasVisit[0]
+    } else {
+      node = new Node(i + 1)
+      visited.push(node);
+    }
+    res = res || node;
+
+    if (node.neighbors.length > 0) {
+      continue;
+    }
+    
+    const neighbors = arr[i];
+    for (let j = 0; j < neighbors.length; j++) {
+      const neighbor = neighbors[j];
+      const hasVisit = visited.filter(item => item.val === neighbor);
+      if (hasVisit.length > 0) {
+        node.neighbors.push(hasVisit[0])
+      } else {
+        const newNode = new Node(neighbor)
+        node.neighbors.push(newNode)
+        visited.push(newNode)
+      }
+    }
+  }
+  return res;
+}
+
+function graphToArray(graph, res) {
+  if (!graph) return [];
+  res = res || [];
+  if (res[graph.val - 1]) {
+    return;
+  }
+  res[graph.val - 1] = [];
+  graph.neighbors.forEach(item => {
+    res[graph.val - 1].push(item.val)
+    graphToArray(item, res)
+  });
+
+  return res;
+}

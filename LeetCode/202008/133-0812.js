@@ -14,20 +14,28 @@ const visited = [];
  * @return {Node}
  */
 var cloneGraph = function(node) {
+  return cloneWithVisit(node, [])
+};
+
+function cloneWithVisit(node, visited) {
   if (!node) {
     return null;
   }
-  let clone = new Node(node.val);
+  const clone = new Node(node.val);
+  visited.push(clone);
   for (let i = 0; i < node.neighbors.length; i++) {
     const neighbor = node.neighbors[i];
-    if (visited.includes(neighbor.val)) {
+    const hasVisit = visited.filter(item => item.val === neighbor.val);
+    if (hasVisit.length > 0) {
+      clone.neighbors.push(hasVisit[0]);
       continue;
     }
-    const newNode = cloneGraph(neighbor)
+    const newNode = cloneWithVisit(neighbor, visited)
     clone.neighbors.push(newNode)
   }
 
   return clone;
-};
+}
 
-test(cloneGraph([[2,4],[1,3],[2,4],[1,3]]), [[2,4],[1,3],[2,4],[1,3]])
+colorLog('input', [[2,4],[1,3],[2,4],[1,3]])
+colorLog('output', graphToArray(cloneGraph(convertGraph([[2,4],[1,3],[2,4],[1,3]]))))
