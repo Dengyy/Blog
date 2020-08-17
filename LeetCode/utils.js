@@ -80,6 +80,13 @@ function buildTree(n, leftVal, rightVal) {
   return tree
 }
 
+function convertTree(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    
+  }
+  return 
+}
+
 function logTree (n, tree, arr) {
   if (n < 1 || !tree) {
     return
