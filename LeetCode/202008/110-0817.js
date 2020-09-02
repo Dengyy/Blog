@@ -32,7 +32,46 @@
  * @return {boolean}
  */
 var isBalanced = function(root) {
+  if (!root) return true;
 
+  const heightLeft = {
+    min: 0,
+    max: 0,
+  }
+  const heightRight = {
+    min: 0,
+    max: 0,
+  }
+  isBalancedWithI(root.left, heightLeft);
+  isBalancedWithI(root.right, heightRight);
+  colorLog('height', root, heightLeft, heightRight)
+  return Math.abs(heightLeft.max - heightRight.max) <= 1;
 };
 
-test()
+function isBalancedWithI (root, height, curHeight = 0) {
+  if (!root || !root.val) {
+    if (height.min === 0 || curHeight < height.min) {
+      height.min = curHeight
+    }
+    return height.max - height.min <= 1
+  }
+
+  curHeight += 1;
+  if (curHeight > height.max) {
+    height.max = curHeight;
+  }
+  if (!isBalancedWithI(root.left, height, curHeight)) {
+    return false;
+  }
+  if (!isBalancedWithI(root.right, height, curHeight)) {
+    return false;
+  }
+
+  return true;
+}
+
+logArrToTree([1,2,2,3,null,null,3,4,null,null,4])
+test(false, isBalanced(convertTree([1,2,2,3,null,null,3,4,null,null,4])))
+// test(false, isBalanced(convertTree([1,2,2,3,3,null,null,4,4])))
+// test(true, isBalanced(convertTree([3,9,20,null,null,15,7])))
+// test(true, isBalanced(convertTree([1,2,2,3,3,3,3,4,4,4,4,4,4,null,null,5,5])))

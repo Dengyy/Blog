@@ -80,11 +80,31 @@ function buildTree(n, leftVal, rightVal) {
   return tree
 }
 
-function convertTree(arr) {
-  for (let i = 0; i < arr.length; i++) {
-    
+function convertTree(arr, i = 0) {
+  let res = null
+  if (i < arr.length && arr[i] !== null) {
+    res = new TreeNode(arr[i])
+    if (2 * i + 1 < arr.length) {
+      res.left = convertTree(arr, 2 * i + 1)
+    }
+    if (2 * i + 2 < arr.length) {
+      res.right = convertTree(arr, 2 * i + 2)
+    }
   }
-  return 
+
+  return res
+}
+
+function convertTreeToArray(tree, arr = [], i = 0) {
+  if (!tree) return arr
+  arr[i] = tree.val
+  if (tree.left) {
+    convertTreeToArray(tree.left, arr, 2 * i + 1)
+  }
+  if (tree.right) {
+    convertTreeToArray(tree.right, arr, 2 * i + 2)
+  }
+  return arr
 }
 
 function logTree (n, tree, arr) {
@@ -114,6 +134,11 @@ function logTree (n, tree, arr) {
     }
     colorLog(str)
   }
+}
+
+function logArrToTree (originArr) {
+  const n = Math.floor(Math.log2(originArr.length)) + 1;
+  logTree(n, convertTree(originArr))
 }
 
 var WalkTreeType = {
@@ -203,4 +228,17 @@ function graphToArray(graph, res) {
   });
 
   return res;
+}
+
+function logArray (arr) {
+  let str = '';
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr[i].length; j++) {
+      str += arr[i][j] + ', '
+    }
+    str += '\n'
+  }
+
+  colorLog(str);
+  return str;
 }
