@@ -5,6 +5,9 @@ from os import path
 import projects
 import sys
 
+reload(sys)  
+sys.setdefaultencoding('utf8')
+
 fromDate = '2020-01-01'
 initEndDate = time.strftime("%Y-%m-%d", time.localtime())
 
